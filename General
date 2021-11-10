@@ -1,0 +1,383 @@
+from logging import disable
+from kivy.lang import Builder 
+from kivymd.app import MDApp 
+from kivy.animation import Animation
+from kivymd.uix import screen
+from kivymd.uix import button
+from kivymd.uix.screen import MDScreen
+from kivymd.uix.button import MDIconButton
+from kivymd.uix.label import MDIcon, MDLabel
+
+from kivy.clock import Clock
+
+import random
+import os
+
+import time
+
+KV = '''
+ScreenManager:
+
+    Screen:
+        FitImage:
+            source: 'C:/Users/User/Desktop/fon.png'
+
+
+
+
+        MDIconButton:
+            icon: 'C:/Users/User/Desktop/star.png'
+            pos_hint: {"center_x": .5, "center_y": .70}
+            user_font_size: '35dp'
+            on_release:app.start()
+
+        MDIconButton:
+            icon: 'C:/Users/User/Desktop/multy.png'
+            pos_hint: {"center_x": .5, "center_y": .55}
+            user_font_size: '35dp'
+            on_release:app.multy()
+
+        MDIconButton:
+            icon: 'C:/Users/User/Desktop/static.png'
+            pos_hint: {"center_x": .5, "center_y": .40}
+            user_font_size: '35dp'
+            on_release:app.static()
+
+        MDIconButton:
+            icon: 'C:/Users/User/Desktop/seting.png'
+            pos_hint: {"center_x": .5, "center_y": .25}
+            user_font_size: '35dp'
+            on_release:app.seting()
+    
+        MDIconButton:
+            icon: 'C:/Users/User/Desktop/exit.png'
+            pos_hint: {"center_x": .5, "center_y": .10}
+            user_font_size: '35dp'
+            on_release:app.exit()
+
+
+
+
+      
+
+    
+    Screen:
+        name: 'start_game'
+        FitImage:
+            source: 'C:/Users/User/Desktop/fon.png'
+
+        FloatLayout:
+            id : BL
+            orientation: 'vertical'
+
+            MDIconButton:
+                id:kamen
+                icon: 'C:/Users/User/Desktop/kamen.png'
+                pos_hint: {"center_x": .30, "center_y": .15}
+                user_font_size: '35dp'
+                on_release:app.Games("kamen")
+
+            MDIconButton:
+                id:nognicy
+                icon: 'C:/Users/User/Desktop/nojnicy.png'
+                pos_hint: {"center_x": .45, "center_y": .2}
+                user_font_size: '35dp'
+                on_release:app.Games("nojnicy")
+
+            MDIconButton:
+                id:bumaga
+                icon: 'C:/Users/User/Desktop/bumaga.png'
+                pos_hint: {"center_x": .60, "center_y": .15}
+                user_font_size: '35dp'
+                on_release:app.Games("bumaga")
+
+    Screen:
+        name: 'new_game'
+        FitImage:
+            source: 'C:/Users/User/Desktop/fon.png'
+
+        FloatLayout:
+            id: BL_new
+            orientation: 'vertical'      
+
+
+                
+
+'''
+
+class Game(MDApp):
+    def build(self):
+        self.General = Builder.load_string(KV)
+        return self.General
+
+    global schet_c 
+    schet_c = 0
+    global schet_i 
+    schet_i = 0
+
+    #global refresh
+
+
+
+
+    def schet_comp(self, a):
+        global schet_c
+        global schet_i
+        
+        if schet_c == 2:
+            txt_proigral = MDLabel(
+                text = 'Поражение. Нужен реванш',
+                pos_hint={'center_x':.70, 'center_y':.5},
+                theme_text_color = 'Custom',
+                text_color = 'black'
+            )
+
+            icon_proigral = MDIconButton(
+                pos_hint = {'center_x':.50, 'center_y':.1},
+                icon = r"C:\\Users\\User\\Desktop\\proigral.png",
+                user_font_size= '100dp'
+            )
+            
+            self.clear_schet()
+            schet_c = 0
+            schet_i = 0
+            self.clear()
+            self.clear_refresh()
+            self.test()
+
+            self.root.current = 'new_game'
+
+            refresh = MDIconButton(
+                pos_hint={'center_x':.50, 'center_y':.3},
+                icon = r'C:\\Users\\User\\Desktop\\refr.png'
+                
+            )
+
+            refresh.bind(on_press = self.start)
+            self.General.ids.BL_new.add_widget(refresh)
+            self.General.ids['refresh'] = refresh
+
+            #self.root.current= 'start_game'
+
+            self.General.ids.BL_new.add_widget(txt_proigral)
+            self.General.ids['txt_proigral']=txt_proigral
+            self.General.ids.BL_new.add_widget(icon_proigral)
+            self.General.ids['icon_proigral'] = icon_proigral
+
+        else:
+            schet_c = schet_c + a
+            s_c = MDLabel(
+                text= ('%s')%schet_c,
+                pos_hint={'center_x':.53, 'center_y':.9},
+                theme_text_color='Custom',
+                text_color='black'
+            )
+            self.General.ids.BL.add_widget(s_c)
+            self.General.ids['s_c'] = s_c
+
+    def schet_igrok(self, b):
+        global schet_i
+        global schet_c
+        if schet_i == 2:
+            txt_pobeda = MDLabel(
+                text = 'Уррра, это победа Ещё разок ???',
+                pos_hint={'center_x':.50, 'center_y':.1},
+                theme_text_color='Custom',
+                text_color = 'black'
+            )
+
+            icon_pobeda = MDIconButton(
+                pos_hint={'center_x':.30, 'center_y':.3},
+                icon = r"C:\\Users\\User\\Desktop\\pobeda.png",
+                user_font_size= '100dp'
+            )
+
+            self.clear_schet()
+            schet_i = 0
+            schet_c = 0
+            self.clear()
+            self.clear_refresh()
+            self.test()
+
+
+            self.root.current = 'new_game'
+
+
+
+
+
+            refresh = MDIconButton(
+                pos_hint={'center_x':.50, 'center_y':.3},
+                icon = r'C:\\Users\\User\\Desktop\\refr.png'
+                
+            )
+
+
+            refresh.bind(on_press = self.start)
+            self.General.ids.BL_new.add_widget(refresh)
+            self.General.ids['refresh'] = refresh
+
+
+
+            self.General.ids.BL_new.add_widget(txt_pobeda)
+            self.General.ids['txt_pobeda']=txt_pobeda
+            self.General.ids.BL_new.add_widget(icon_pobeda)
+            self.General.ids['icon_pobeda'] = icon_pobeda
+            
+        else:
+            schet_i = schet_i+ b
+            s_i = MDLabel(
+                text= ('%s')%schet_i,
+                pos_hint={'center_x':.53, 'center_y':.1},
+                theme_text_color='Custom',
+                text_color='black'
+            )
+            self.General.ids.BL.add_widget(s_i)
+            self.General.ids['s_i']=s_i
+
+
+    def hod_igrok(self, igrok, mix, miy):
+        ruka_igroka = MDIconButton(
+            pos_hint={"center_x":mix, "center_y":miy},
+            icon=r"C:\\Users\\User\\Desktop\\%s.png"%igrok,
+            user_font_size= '50dp'
+        )
+
+        #Присоение виджету из питон кода id
+        self.General.ids.BL.add_widget(ruka_igroka)
+        self.General.ids['ruka_igroka'] = ruka_igroka
+
+
+    def hod_comp(self, comp, c_x, c_y):
+        ruka_comp = MDIconButton(
+                pos_hint={"center_x": c_x, "center_y":c_y},
+                icon= r"C:\\Users\\User\\Desktop\\%s.png"%comp,
+                user_font_size='50dp'
+        )
+
+        self.General.ids.BL.add_widget(ruka_comp)
+        self.General.ids['ruka_comp'] = ruka_comp
+        
+
+
+        #return self.General
+
+
+
+
+#Уточнить про аргументы
+    def clear(self, *one, **sto):
+        try:
+            self.General.ids.BL.remove_widget(self.General.ids.ruka_igroka)
+            self.General.ids.BL.remove_widget(self.General.ids.ruka_comp)
+        except:
+            pass
+
+    def clear_schet(self):
+        try:
+            self.General.ids.BL.remove_widget(self.General.ids.s_i)
+            self.General.ids.BL.remove_widget(self.General.ids.s_c)
+        except:
+            pass
+
+
+
+
+    def clear_refresh(self):
+        try:
+            self.General.ids.BL_new.remove_widget(self.General.ids.txt_proigral)
+            self.General.ids.BL_new.remove_widget(self.General.ids.txt_pobeda)
+            #self.General.ids.BL_new.remove_widget(self.General.ids.icon_proigral)
+            #self.General.ids.BL_new.remove_widget(self.General.ids.icon_pobeda)
+        except:
+            pass
+
+
+    def test(self):
+        try:
+            self.General.ids.BL_new.remove_widget(self.General.ids.icon_proigral)
+            self.General.ids.BL_new.remove_widget(self.General.ids.icon_pobeda)
+        except:
+            pass
+
+
+    def Games(self, igrok):
+
+        
+        lis = ['kamen','nojnicy', 'bumaga']
+        comp= random.choice(lis)
+
+        if comp == "kamen" and igrok == "kamen" or comp == "nojnicy" and igrok == "nojnicy" or comp == "bumaga" and igrok == "bumaga":
+                self.clear()
+                self.clear_schet()
+                Clock.schedule_once(self.clear, 3)
+
+                self.hod_igrok(igrok, .45, .50)
+                self.hod_comp('c_'+comp, .45, .70)
+
+                self.schet_igrok(0)
+                self.schet_comp(0)
+
+        elif comp == "bumaga" and igrok == "kamen" or comp == "nojnicy" and igrok == "bumaga" or comp == "kamen" and igrok == "nojnicy":
+                self.clear()
+                self.clear_schet()
+                Clock.schedule_once(self.clear, 3)
+                self.hod_igrok(igrok[0]+'_i_p', .45, .50)
+                self.hod_comp(comp[0]+'_c_v', .45, .70)
+
+                self.schet_igrok(0)
+                self.schet_comp(1)
+
+        elif igrok == "bumaga" and comp == "kamen" or igrok == "nojnicy" and comp == "bumaga" or igrok == "kamen" and comp == "nojnicy":
+                self.clear() # Уже вызван
+                self.clear_schet()
+                Clock.schedule_once(self.clear, 3) #Тут
+                self.hod_igrok(igrok[0]+'_i_v', .45, .50)
+                self.hod_comp(comp[0]+'_c_p', .45, .70)
+
+                self.schet_igrok(1)
+                self.schet_comp(0)
+
+           
+
+ 
+
+
+
+
+
+            
+
+    def start(self, *args):
+        self.clear_schet()
+        self.root.current= 'start_game'
+
+
+    def multy(self):
+        print(2)
+
+    def static(self):
+        print(3)
+
+
+    def seting(self):
+        print(4)
+
+    def exit(self):
+        exit()
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+Game().run()
