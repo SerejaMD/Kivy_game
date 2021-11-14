@@ -8,6 +8,9 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.label import MDIcon, MDLabel
 
+from kivy.config import Config
+# Добавление иконки в окно
+
 from kivy.clock import Clock
 
 import random
@@ -20,37 +23,37 @@ ScreenManager:
 
     Screen:
         FitImage:
-            source: 'C:/Users/User/Desktop/fon.png'
+            source: 'fon.png'
 
 
 
 
         MDIconButton:
-            icon: 'C:/Users/User/Desktop/star.png'
+            icon: 'star.png'
             pos_hint: {"center_x": .5, "center_y": .70}
             user_font_size: '35dp'
             on_release:app.start()
 
         MDIconButton:
-            icon: 'C:/Users/User/Desktop/multy.png'
+            icon: 'multy.png'
             pos_hint: {"center_x": .5, "center_y": .55}
             user_font_size: '35dp'
             on_release:app.multy()
 
         MDIconButton:
-            icon: 'C:/Users/User/Desktop/static.png'
+            icon: 'static.png'
             pos_hint: {"center_x": .5, "center_y": .40}
             user_font_size: '35dp'
             on_release:app.static()
 
         MDIconButton:
-            icon: 'C:/Users/User/Desktop/seting.png'
+            icon: 'seting.png'
             pos_hint: {"center_x": .5, "center_y": .25}
             user_font_size: '35dp'
             on_release:app.seting()
     
         MDIconButton:
-            icon: 'C:/Users/User/Desktop/exit.png'
+            icon: 'exit.png'
             pos_hint: {"center_x": .5, "center_y": .10}
             user_font_size: '35dp'
             on_release:app.exit()
@@ -64,7 +67,7 @@ ScreenManager:
     Screen:
         name: 'start_game'
         FitImage:
-            source: 'C:/Users/User/Desktop/fon.png'
+            source: 'fon.png'
 
         FloatLayout:
             id : BL
@@ -72,21 +75,21 @@ ScreenManager:
 
             MDIconButton:
                 id:kamen
-                icon: 'C:/Users/User/Desktop/kamen.png'
+                icon: 'kamen.png'
                 pos_hint: {"center_x": .30, "center_y": .15}
                 user_font_size: '35dp'
                 on_release:app.Games("kamen")
 
             MDIconButton:
                 id:nognicy
-                icon: 'C:/Users/User/Desktop/nojnicy.png'
+                icon: 'nojnicy.png'
                 pos_hint: {"center_x": .45, "center_y": .2}
                 user_font_size: '35dp'
                 on_release:app.Games("nojnicy")
 
             MDIconButton:
                 id:bumaga
-                icon: 'C:/Users/User/Desktop/bumaga.png'
+                icon: 'bumaga.png'
                 pos_hint: {"center_x": .60, "center_y": .15}
                 user_font_size: '35dp'
                 on_release:app.Games("bumaga")
@@ -94,7 +97,7 @@ ScreenManager:
     Screen:
         name: 'new_game'
         FitImage:
-            source: 'C:/Users/User/Desktop/fon.png'
+            source: 'fon.png'
 
         FloatLayout:
             id: BL_new
@@ -104,6 +107,7 @@ ScreenManager:
                 
 
 '''
+
 
 class Game(MDApp):
     def build(self):
@@ -116,9 +120,10 @@ class Game(MDApp):
     schet_i = 0
 
     #global refresh
-
-
-
+    
+    Config.set('kivy', 'window_icon', 'icon.icon')  
+    icon = 'icon.icon'
+    # Иконка окна
 
     def schet_comp(self, a):
         global schet_c
@@ -134,7 +139,7 @@ class Game(MDApp):
 
             icon_proigral = MDIconButton(
                 pos_hint = {'center_x':.50, 'center_y':.1},
-                icon = r"C:\\Users\\User\\Desktop\\proigral.png",
+                icon = r"proigral.png",
                 user_font_size= '100dp'
             )
             
@@ -149,7 +154,7 @@ class Game(MDApp):
 
             refresh = MDIconButton(
                 pos_hint={'center_x':.50, 'center_y':.3},
-                icon = r'C:\\Users\\User\\Desktop\\refr.png'
+                icon = r'refr.png'
                 
             )
 
@@ -188,7 +193,7 @@ class Game(MDApp):
 
             icon_pobeda = MDIconButton(
                 pos_hint={'center_x':.30, 'center_y':.3},
-                icon = r"C:\\Users\\User\\Desktop\\pobeda.png",
+                icon = r"pobeda.png",
                 user_font_size= '100dp'
             )
 
@@ -208,7 +213,7 @@ class Game(MDApp):
 
             refresh = MDIconButton(
                 pos_hint={'center_x':.50, 'center_y':.3},
-                icon = r'C:\\Users\\User\\Desktop\\refr.png'
+                icon = r'refr.png'
                 
             )
 
@@ -239,7 +244,7 @@ class Game(MDApp):
     def hod_igrok(self, igrok, mix, miy):
         ruka_igroka = MDIconButton(
             pos_hint={"center_x":mix, "center_y":miy},
-            icon=r"C:\\Users\\User\\Desktop\\%s.png"%igrok,
+            icon=r"%s.png"%igrok,
             user_font_size= '50dp'
         )
 
@@ -251,7 +256,7 @@ class Game(MDApp):
     def hod_comp(self, comp, c_x, c_y):
         ruka_comp = MDIconButton(
                 pos_hint={"center_x": c_x, "center_y":c_y},
-                icon= r"C:\\Users\\User\\Desktop\\%s.png"%comp,
+                icon= r"%s.png"%comp,
                 user_font_size='50dp'
         )
 
